@@ -55,3 +55,48 @@ reviewer = Agent(
 )
 
 # Instanciar o modelo GPT
+# Instanciar o modelo GPT-4 Mini
+OpenAIGPT4Mini = ChatOpenAI(
+    model="gpt-4-mini"  # Especifica o modelo como GPT-4 Mini
+)
+
+# Definir tarefas para cada agente
+task1 = Task(
+    description="""Pesquise sobre agentes de IA e como criá-los usando a LangChain, descrevendo os principais componentes.""",
+    agent=researcher,
+    expected_output="Lista de componentes principais da LangChain e explicações sobre agentes de IA."
+)
+
+task2 = Task(
+    description="""Crie uma estrutura de tutorial explicando como criar agentes com LangChain, cobrindo desde a introdução até exemplos práticos.""",
+    agent=writer,
+    expected_output="Estrutura completa do tutorial sobre criação de agentes com LangChain."
+)
+
+task3 = Task(
+    description="""Implemente um exemplo prático de um agente de IA básico usando LangChain e forneça o código comentado.""",
+    agent=developer,
+    expected_output="Código-fonte de um agente básico utilizando LangChain, com comentários e explicações."
+)
+
+task4 = Task(
+    description="""Revise o tutorial e o código, garantindo que o conteúdo seja compreensível e que os exemplos estejam corretos.""",
+    agent=reviewer,
+    expected_output="Revisão completa do tutorial e código, garantindo clareza e precisão."
+)
+
+# Instanciar a equipe (Crew) e adicionar as tarefas
+crew = Crew(
+    agents=[researcher, writer, developer, reviewer],
+    tasks=[task1, task2, task3, task4],
+    verbose=True,
+    process=Process.sequential,  # As tarefas serão executadas uma após a outra
+    manager_llm=OpenAIGPT4Mini  # Adiciona o modelo GPT-4 Mini como gerente
+)
+
+# Iniciar o processo de execução dos agentes
+result = crew.kickoff()
+
+# Exibir resultados
+print("######################")
+print(result)
