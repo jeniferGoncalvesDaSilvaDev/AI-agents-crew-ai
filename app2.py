@@ -1,11 +1,11 @@
 import os
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 from crewai import Agent, Task, Crew, Process
-from Tools.search_tools import SearchTools  # Importando a classe SearchTools
+from search_tools import SearchTools  # Importando a classe SearchTools
 from langchain_openai import ChatOpenAI  # Importando a classe ChatOpenAI
 
 # Carregar variáveis de ambiente do .env
-load_dotenv()
+#load_dotenv()
 
 # Pegar a chave da API do Serper
 serper_api_key = os.getenv('SERPER_API_KEY')
